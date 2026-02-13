@@ -1,7 +1,11 @@
 package com.chhavi.firstjobapp.job;
 
+import com.chhavi.firstjobapp.company.Company;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
-import org.springframework.web.bind.annotation.GetMapping;
+
 
 @Entity
 //@Table(name="job_table")
@@ -15,6 +19,9 @@ public class Job {
     private String maxSalary;
     private String location;
 
+    @ManyToOne
+    @JsonBackReference
+    private Company company;
     public Job() {
     }
 
