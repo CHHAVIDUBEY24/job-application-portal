@@ -1,6 +1,7 @@
 package com.chhavi.firstjobapp.company;
 
 import com.chhavi.firstjobapp.job.Job;
+import com.chhavi.firstjobapp.review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -16,9 +17,21 @@ public class Company {
     private String description;
 
 
-    @OneToMany(mappedBy="company")
+    @OneToMany(mappedBy="company", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Job> jobs;
+
+    @OneToMany(mappedBy = "company" , cascade = CascadeType.ALL)
+
+    private List<Review> reviews;
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 
     public Company() {
     }
