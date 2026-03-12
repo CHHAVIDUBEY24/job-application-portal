@@ -6,6 +6,7 @@ import com.chhavi.jobms.job.JobRepository;
 import com.chhavi.jobms.job.JobService;
 import com.chhavi.jobms.job.dto.JobWithCompanyDTO;
 import com.chhavi.jobms.job.external.Company;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 @Service
 public class JobServiceImpl implements JobService {
     JobRepository jobRepository;
+    @Autowired
+    RestTemplate restTemplate;
     public JobServiceImpl(JobRepository jobRepository) {
         this.jobRepository = jobRepository;
     }
@@ -34,13 +37,17 @@ public class JobServiceImpl implements JobService {
 
     private JobWithCompanyDTO convertToDto(Job job)
     {
-        JobWithCompanyDTO jobWithCompanyDTO=new JobWithCompanyDTO();
+        JobWithCompanyDTO jobWithCompanyDTO = new JobWithCompanyDTO();
         jobWithCompanyDTO.setJob(job);
-        RestTemplate restTemplate=new RestTemplate();
-        Company company= restTemplate.getForObject("http://localhost:8081/companies/"+job.getCompanyId(),Company.class);
-        jobWithCompanyDTO.setCompany(company);
-        return jobWithCompanyDTO;
 
+        Company company = restTemplate.getForObject(
+                "http://COMPANYMS/companies/" + job.getCompanyId(),
+                Company.class
+        );
+
+        jobWithCompanyDTO.setCompany(company);
+
+        return jobWithCompanyDTO;
     }
     @Override
     public void createJob(Job job) {
