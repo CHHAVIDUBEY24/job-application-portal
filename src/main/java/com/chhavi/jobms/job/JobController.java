@@ -1,6 +1,7 @@
 package com.chhavi.jobms.job;
 
-import com.chhavi.jobms.job.dto.JobWithCompanyDTO;
+import com.chhavi.jobms.job.dto.JobDTO;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class JobController {
     }
 
     @GetMapping
-    public ResponseEntity<List<JobWithCompanyDTO>> findAll()
+    public ResponseEntity<List<JobDTO>> findAll()
     {
         return ResponseEntity.ok(jobService.findAll());
     }
